@@ -5,23 +5,23 @@ services:
   - docker
 
 before_install:
-  - docker build -t devhub/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t digglepress/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run devhub/react-test npm test -- --coverage
+  - docker run digglepress/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t devhub/multi-client ./client
-  - docker build -t devhub/multi-nginx ./nginx
-  - docker build -t devhub/multi-server ./server
-  - docker build -t devhub/multi-worker ./worker
+  - docker build -t digglepress/multi-client ./client
+  - docker build -t digglepress/multi-nginx ./nginx
+  - docker build -t digglepress/multi-server ./server
+  - docker build -t digglepress/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push devhub/multi-client
-  - docker push devhub/multi-nginx
-  - docker push devhub/multi-server
-  - docker push devhub/multi-worker
+  - docker push digglepress/multi-client
+  - docker push digglepress/multi-nginx
+  - docker push digglepress/multi-server
+  - docker push digglepress/multi-worker
 
 deploy:
   provider: elasticbeanstalk
